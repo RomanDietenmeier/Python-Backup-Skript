@@ -13,12 +13,12 @@ def main():
         quelle=module1.setquelle()
     print("QUELLE: "+quelle)
     dateien=[]
-    #dateienex=[]
+
     d,o=module1.getFilesNFolder(quelle)
     for i in range(0,len(d)):
         fn,fx=os.path.splitext(quelle+d[i])
         dateien.append(fn+fx)
-        #dateienex.append(fx)
+
     del d
     oebenen=0
     d,dx,e,el=module1.getFilesNUnterordner(o,quelle,oebenen)
@@ -26,15 +26,11 @@ def main():
     errorl+=el
     for j in range(0,len(d)):
         dateien.append(d[j]+dx[j])
-        #dateienex.append(dx[j])
     
     print("\nAuswertung:\n")
     print("ANZ Dateien: "+str(len(dateien)))
     time.sleep(1)
-    """
-    for i in range(len(dateien)):
-        print(str(i)+"\t"+dateien[i])
-    """
+    
     ziel=None
     while ziel==None:
         ziel=module1.setZiel()
@@ -45,7 +41,6 @@ def main():
         except:
             continue
     print(ziel)
-    #ziel="F:\\Roman\\Anime\\"
     print("START COPYING!")    
     do=True
     sco=""
@@ -58,16 +53,11 @@ def main():
     cp=10000
     jump=False
     for i in range(len(dateien)):        
-        #txt=ziel#+dateien[i].split("\\")[-1]
-        #print(str(os.path.isdir(txt))+" "+txt)
         txt=dateien[i].split(sco)[1].split("\\")[:-1]
-        #print("txt: "+str(txt))
         co=""
         for j in range(len(txt)):
             co+=txt[j]+"\\"        
-        #print("co: "+co)        
         if co!=lco:
-            #print("NEW DIR!")
             lco=co
             if not os.path.isdir(ziel+co):
                 try:
@@ -79,8 +69,7 @@ def main():
                     jump=True
         if jump:
             continue
-        txt=ziel+co+dateien[i].split("\\")[-1]
-        #print("Ziel: "+txt)
+        txt=ziel+co+dateien[i].split("\\")[-1]        
         do=module1.b_write(str(dateien[i]),txt,maxFileSize)                
         if do==True:
             try:
@@ -92,7 +81,6 @@ def main():
                 errorl.append(txt)
                 continue
             txt=ziel+co+dateien[i].split("\\")[-1]
-            #print(str(i)+" "+txt)
             try:
                 z=open(txt,"wb")      #Datei erstellen
             except:
@@ -117,9 +105,6 @@ def main():
             proz=(int)(i/len(dateien)*100)
             print("wrote file "+str(i)+" / "+str(proz)+"% "+dateien[i].split("\\")[-1])
         else:
-            #txt=ziel+co+dateien[i].split("\\")[-1]
-            #print(str(i)+" "+txt)
-            #print(str(i)+" "+str(do)+" "+ziel+dateien[i].split("\\")[-1])
             if i>cp:
                 proz=(int)(i/len(dateien)*100)
                 print(". "+str(proz)+"%")                
